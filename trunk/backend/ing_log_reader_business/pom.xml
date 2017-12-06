@@ -21,5 +21,17 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>ing_log_reader</groupId>
+      <artifactId>ing_log_reader_commons</artifactId>
+      <version>LATEST</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jcraft</groupId>
+      <artifactId>jsch</artifactId>
+      <version>0.1.54</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>
