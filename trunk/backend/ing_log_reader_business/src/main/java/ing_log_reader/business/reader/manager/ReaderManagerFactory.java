@@ -1,5 +1,6 @@
 package ing_log_reader.business.reader.manager;
 
+import ing_log_reader.business.ReaderController;
 import ing_log_reader.commons.dto.ConfigManagerDTO;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 
@@ -11,13 +12,13 @@ public class ReaderManagerFactory {
 
     }
 
-    public IReaderManager getReaderManager(ConfigManagerDTO configManagerDTO){
+    public IReaderManager getReaderManager(ReaderController readerController, ConfigManagerDTO configManagerDTO){
 
         IReaderManager result = null;
 
         if(configManagerDTO instanceof SSHConfigManagerDTO){
 
-            result = new SSHReaderManager((SSHConfigManagerDTO)configManagerDTO);
+            result = new SSHReaderManager((SSHConfigManagerDTO)configManagerDTO, readerController);
         }
 
         return result;
