@@ -1,12 +1,13 @@
 package ing_log_reader.commons.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ReadDTO implements Serializable{
 
     private String contentRead;
 
-    private FilterDTO filter;
+    private List<FilterDTO> filters;
 
     public String getContentRead() {
         return contentRead;
@@ -16,11 +17,11 @@ public class ReadDTO implements Serializable{
         this.contentRead = contentRead;
     }
 
-    public FilterDTO getFilter() {
-        return filter;
+    public List<FilterDTO> getFilters() {
+        return filters;
     }
 
-    public void setFilter(FilterDTO filter) {
-        this.filter = filter;
+    public void setFilters(List<FilterDTO> filters) {
+        this.filters = filters;
     }
 }

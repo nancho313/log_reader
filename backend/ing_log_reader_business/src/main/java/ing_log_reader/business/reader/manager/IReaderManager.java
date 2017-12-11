@@ -1,16 +1,26 @@
 package ing_log_reader.business.reader.manager;
 
+import ing_log_reader.business.ReaderController;
 import ing_log_reader.commons.dto.ConfigManagerDTO;
 import ing_log_reader.commons.exception.LogReaderException;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class IReaderManager<T extends ConfigManagerDTO> extends Observable implements Runnable{
+public abstract class IReaderManager<T extends ConfigManagerDTO> implements Runnable{
 
     private T configManager;
 
     private Boolean closed = Boolean.FALSE;
+
+    private ReaderController readerController;
+
+    public IReaderManager(T configManager, ReaderController readerController){
+
+        this.configManager = configManager;
+
+        this.readerController = readerController;
+    }
 
     abstract void read() throws LogReaderException;
 
@@ -19,13 +29,6 @@ public abstract class IReaderManager<T extends ConfigManagerDTO> extends Observa
     abstract boolean isAvailable();
 
     abstract void close();
-
-    public IReaderManager(T configManager, Observer observer){
-
-        this.configManager = configManager;
-
-        this.addObserver(observer);
-    }
 
     public void closeManager(){
 
@@ -42,5 +45,9 @@ public abstract class IReaderManager<T extends ConfigManagerDTO> extends Observa
 
     public Boolean getClosed() {
         return closed;
+    }
+
+    protected ReaderController getReaderController() {
+        return readerController;
     }
 }

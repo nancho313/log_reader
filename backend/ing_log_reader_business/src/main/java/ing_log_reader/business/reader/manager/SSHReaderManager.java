@@ -4,6 +4,7 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import ing_log_reader.business.ReaderController;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.exception.LogReaderException;
@@ -19,9 +20,9 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
     private Channel channel;
 
-    public SSHReaderManager(SSHConfigManagerDTO sshConfigManagerDTO, Observer observer){
+    public SSHReaderManager(SSHConfigManagerDTO sshConfigManagerDTO, ReaderController readerController){
 
-        super(sshConfigManagerDTO, observer);
+        super(sshConfigManagerDTO, readerController);
     }
 
     public void read() throws LogReaderException {
@@ -51,7 +52,8 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
                     result = new String(tmp, 0, i);
 
-                    this.notifyObservers(result);
+                    this.getReaderController().sendContentReads(result);
+
                 }
                 if (channel.isClosed()) {
 
