@@ -24,7 +24,7 @@
     <dependency>
       <groupId>ing_log_reader</groupId>
       <artifactId>ing_log_reader_commons</artifactId>
-      <version>LATEST</version>
+      <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
