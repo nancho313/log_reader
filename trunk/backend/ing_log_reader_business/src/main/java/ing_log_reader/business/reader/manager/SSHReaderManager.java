@@ -120,6 +120,9 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
     public void run() {
 
         try {
+
+            initManager();
+
             read();
         } catch (LogReaderException e) {
             close();

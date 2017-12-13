@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class ConfigManagerDTO implements Serializable {
 
-    private String idRead;
+    private String idSession;
 
-    public String getIdRead() {
-        return idRead;
+    public String getIdSession() {
+        return idSession;
     }
 
-    public void setIdRead(String idRead) {
-        this.idRead = idRead;
+    public void setIdSession(String idSession) {
+        this.idSession = idSession;
     }
 }
