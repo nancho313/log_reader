@@ -6,13 +6,9 @@ import ing_log_reader.commons.enums.FilterEnum;
 
 import java.util.List;
 
-public class ReaderBuilder {
+public enum ReaderBuilder {
 
-    private static final ReaderBuilder INSTANCE = new ReaderBuilder();
-
-    private ReaderBuilder(){
-
-    }
+    INSTANCE;
 
     public ReadDTO getReadDTO(String contentLog){
 
@@ -54,9 +50,5 @@ public class ReaderBuilder {
 
         return contentLog;
 
-    }
-
-    public static ReaderBuilder getINSTANCE() {
-        return INSTANCE;
     }
 }

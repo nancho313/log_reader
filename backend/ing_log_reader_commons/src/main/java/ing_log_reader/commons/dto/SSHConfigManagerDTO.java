@@ -1,6 +1,11 @@
 package ing_log_reader.commons.dto;
 
-public class SSHConfigManagerDTO extends ConfigManagerDTO {
+public class SSHConfigManagerDTO extends IConfigManagerDTO {
+
+    public SSHConfigManagerDTO(UserSettingsDTO userSettingsDTO){
+
+        super(userSettingsDTO);
+    }
 
     private String user;
 

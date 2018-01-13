@@ -10,7 +10,6 @@ import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.exception.LogReaderException;
 
 import java.io.InputStream;
-import java.util.Observer;
 
 public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
