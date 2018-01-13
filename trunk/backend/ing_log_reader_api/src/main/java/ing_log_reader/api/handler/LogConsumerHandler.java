@@ -1,19 +1,18 @@
-package ing_log_reader.api.dto;
+package ing_log_reader.api.handler;
 
 import ing_log_reader.business.ReaderController;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
 
 import javax.websocket.Session;
-import java.io.Serializable;
 
-public class LogConsumerDTO implements Serializable {
+public class LogConsumerHandler{
 
     private Session session;
 
     private ReaderController readerController;
 
-    public LogConsumerDTO(IReaderPrincipal iReaderPrincipal, Session session){
+    public LogConsumerHandler(IReaderPrincipal iReaderPrincipal, Session session){
 
         this.session = session;
         try {

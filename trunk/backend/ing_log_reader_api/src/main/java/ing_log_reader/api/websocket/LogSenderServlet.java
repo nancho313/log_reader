@@ -1,7 +1,8 @@
 package ing_log_reader.api.websocket;
 
 import com.google.gson.Gson;
-import ing_log_reader.api.dto.LogConsumerDTO;
+import ing_log_reader.api.handler.LogConsumerHandler;
+import ing_log_reader.commons.dto.UserSettingsDTO;
 import ing_log_reader.commons.dto.ReadDTO;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 
@@ -18,19 +19,23 @@ import java.util.Map;
 @ServerEndpoint("/LogSender")
 public class LogSenderServlet implements IReaderPrincipal {
 
-    private Map<String, LogConsumerDTO> currentUsers;
+    private Map<String, LogConsumerHandler> currentUsers;
 
     private Gson gson = new Gson();
 
     @OnOpen
     public void onOpen(Session session) {
 
-        this.getCurrentUsers().put(session.getId(), new LogConsumerDTO(this, session));
+        this.getCurrentUsers().put(session.getId(), new LogConsumerHandler(this, session));
 
         //Prueba
-        LogConsumerDTO consumer = this.getCurrentUsers().get(session.getId());
+        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
 
-        SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO();
+        UserSettingsDTO configManager = new UserSettingsDTO();
+
+        configManager.setIdSession(session.getId());
+
+        SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(configManager);
 
         configManagerDTO.setDirLog("/usr/local/jboss-portal-2.7.1/server/default/log/server.log");
 
@@ -39,8 +44,6 @@ public class LogSenderServlet implements IReaderPrincipal {
         configManagerDTO.setPassword("consulta_log");
 
         configManagerDTO.setUser("consulta_log");
-
-        configManagerDTO.setIdSession(session.getId());
 
         consumer.getReaderController().startRead(configManagerDTO);
     }
@@ -56,7 +59,7 @@ public class LogSenderServlet implements IReaderPrincipal {
     @Override
     public void sendContentReads(ReadDTO contentReads, String idSession) {
 
-        LogConsumerDTO consumer = this.getCurrentUsers().get(idSession);
+        LogConsumerHandler consumer = this.getCurrentUsers().get(idSession);
 
         String message = this.getGson().toJson(contentReads);
 
@@ -67,10 +70,10 @@ public class LogSenderServlet implements IReaderPrincipal {
         }
     }
 
-    public Map<String, LogConsumerDTO> getCurrentUsers() {
+    public Map<String, LogConsumerHandler> getCurrentUsers() {
 
         if(currentUsers == null){
-            currentUsers = new HashMap<String, LogConsumerDTO>();
+            currentUsers = new HashMap<String, LogConsumerHandler>();
         }
 
         return currentUsers;

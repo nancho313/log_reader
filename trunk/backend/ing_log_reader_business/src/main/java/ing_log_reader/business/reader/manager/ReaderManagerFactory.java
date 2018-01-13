@@ -1,30 +1,22 @@
 package ing_log_reader.business.reader.manager;
 
 import ing_log_reader.business.ReaderController;
-import ing_log_reader.commons.dto.ConfigManagerDTO;
+import ing_log_reader.commons.dto.IConfigManagerDTO;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 
-public class ReaderManagerFactory {
+public enum ReaderManagerFactory {
 
-    private static final ReaderManagerFactory INSTANCE = new ReaderManagerFactory();
+    INSTANCE;
 
-    private ReaderManagerFactory(){
-
-    }
-
-    public IReaderManager getReaderManager(ReaderController readerController, ConfigManagerDTO configManagerDTO){
+    public IReaderManager getReaderManager(ReaderController readerController, IConfigManagerDTO configManager){
 
         IReaderManager result = null;
 
-        if(configManagerDTO instanceof SSHConfigManagerDTO){
+        if(configManager instanceof SSHConfigManagerDTO){
 
-            result = new SSHReaderManager((SSHConfigManagerDTO)configManagerDTO, readerController);
+            result = new SSHReaderManager((SSHConfigManagerDTO)configManager, readerController);
         }
 
         return result;
-    }
-
-    public static ReaderManagerFactory getINSTANCE() {
-        return INSTANCE;
     }
 }

@@ -2,7 +2,7 @@ package ing_log_reader.commons.dto;
 
 import java.io.Serializable;
 
-public class ConfigManagerDTO implements Serializable {
+public class UserSettingsDTO implements Serializable {
 
     private String idSession;
 
