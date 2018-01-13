@@ -2,18 +2,18 @@ package ing_log_reader.commons.dto;
 
 public abstract class IConfigManagerDTO {
 
-    private UserSettingsDTO userSettingsDTO;
+    private UserCriteriaDTO userCriteriaDTO;
 
-    public IConfigManagerDTO(UserSettingsDTO userSettingsDTO){
+    public IConfigManagerDTO(UserCriteriaDTO userCriteriaDTO){
 
-        this.userSettingsDTO = userSettingsDTO;
+        this.userCriteriaDTO = userCriteriaDTO;
     }
 
-    public UserSettingsDTO getUserSettingsDTO() {
-        return userSettingsDTO;
+    public UserCriteriaDTO getUserCriteriaDTO() {
+        return userCriteriaDTO;
     }
 
-    public void setUserSettingsDTO(UserSettingsDTO userSettingsDTO) {
-        this.userSettingsDTO = userSettingsDTO;
+    public void setUserCriteriaDTO(UserCriteriaDTO userCriteriaDTO) {
+        this.userCriteriaDTO = userCriteriaDTO;
     }
 }

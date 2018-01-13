@@ -5,6 +5,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import ing_log_reader.business.ReaderController;
+import ing_log_reader.business.builder.CriteriaBuilder;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.exception.LogReaderException;
@@ -26,9 +27,9 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
     public void read() throws LogReaderException {
 
-        String result = "";
+        String result;
 
-        String commandTail = "tail -f " + getConfigManager().getDirLog();
+        String commandTail = CriteriaBuilder.INSTANCE.buildCriteria(getConfigManager().getUserCriteriaDTO(), getConfigManager().getDirLog());
 
         try {
 
@@ -54,7 +55,7 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
                     this.getReaderController().sendContentReads(result);
 
                 }
-                if (channel.isClosed()) {
+                if (channel.isClosed() || getConfigManager().getUserCriteriaDTO().getResultType().isCloseable()) {
 
                     break;
                 }
