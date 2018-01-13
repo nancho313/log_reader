@@ -2,10 +2,11 @@ package ing_log_reader.api.websocket;
 
 import com.google.gson.Gson;
 import ing_log_reader.api.handler.LogConsumerHandler;
-import ing_log_reader.commons.dto.UserSettingsDTO;
+import ing_log_reader.commons.dto.UserCriteriaDTO;
 import ing_log_reader.commons.dto.ReadDTO;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 
+import ing_log_reader.commons.enums.ResultTypeEnum;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
 
 import javax.websocket.OnMessage;
@@ -31,11 +32,13 @@ public class LogSenderServlet implements IReaderPrincipal {
         //Prueba
         LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
 
-        UserSettingsDTO configManager = new UserSettingsDTO();
+        UserCriteriaDTO userCriteria = new UserCriteriaDTO();
 
-        configManager.setIdSession(session.getId());
+        userCriteria.setIdSession(session.getId());
 
-        SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(configManager);
+        userCriteria.setResultType(ResultTypeEnum.TRACE);
+
+        SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(userCriteria);
 
         configManagerDTO.setDirLog("/usr/local/jboss-portal-2.7.1/server/default/log/server.log");
 

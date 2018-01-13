@@ -2,9 +2,9 @@ package ing_log_reader.commons.dto;
 
 public class SSHConfigManagerDTO extends IConfigManagerDTO {
 
-    public SSHConfigManagerDTO(UserSettingsDTO userSettingsDTO){
+    public SSHConfigManagerDTO(UserCriteriaDTO userCriteriaDTO){
 
-        super(userSettingsDTO);
+        super(userCriteriaDTO);
     }
 
     private String user;

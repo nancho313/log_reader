@@ -3,7 +3,7 @@ package ing_log_reader.commons.enums;
 public enum FilterEnum {
 
     SEARCH("$$SEARCH(%d)%s"),
-    H_SEARCH("$$S_SEARCH(%d)%s");
+    HIGHLIGHT_SEARCH("$$HIGHLIGHT_SEARCH(%d)%s");
 
     private String replacePattern;
 

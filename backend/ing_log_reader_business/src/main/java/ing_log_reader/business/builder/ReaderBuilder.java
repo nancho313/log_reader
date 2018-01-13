@@ -43,12 +43,6 @@ public enum ReaderBuilder {
             contentLog = contentLog.replaceAll(filter.getValue(), String.format(filter.getFilterType().getReplacePattern(), filter.getValue().length(), filter.getValue()));
         }
 
-        if(filter.getFilterType().equals(FilterEnum.H_SEARCH)){
-
-            contentLog = contentLog.replaceAll(filter.getValue(), String.format(filter.getFilterType().getReplacePattern(), filter.getValue().length(), filter.getValue()));
-        }
-
         return contentLog;
-
     }
 }

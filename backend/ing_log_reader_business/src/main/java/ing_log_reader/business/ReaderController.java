@@ -28,7 +28,7 @@ public class ReaderController {
 
     public void startRead(IConfigManagerDTO configManager){
 
-        this.idSession = configManager.getUserSettingsDTO().getIdSession();
+        this.idSession = configManager.getUserCriteriaDTO().getIdSession();
 
         this.readerManager = ReaderManagerFactory.INSTANCE.getReaderManager(this, configManager);
 
