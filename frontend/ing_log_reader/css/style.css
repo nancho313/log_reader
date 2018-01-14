@@ -46,7 +46,9 @@
 }
 
 #log_reader{
-	
+
+	height: 100%;
+    overflow: scroll;
 }
 
 #content_log_options{

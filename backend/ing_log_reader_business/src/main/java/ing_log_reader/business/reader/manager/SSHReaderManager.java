@@ -35,20 +35,22 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
         String result;
 
-        String commandTail = CriteriaBuilder.INSTANCE.buildCriteria(getConfigManager().getUserCriteriaDTO(), getConfigManager().getDirLog());
+        String command = CriteriaBuilder.INSTANCE.buildCriteria(getConfigManager().getUserCriteriaDTO(), getConfigManager().getDirLog());
 
-        logger.info("[read] commandTail -> {} ", commandTail);
+        logger.info("[read] commandTail -> {} ", command);
 
         try {
 
             channel = session.openChannel("exec");
-            ((ChannelExec) channel).setCommand(commandTail);
+            ((ChannelExec) channel).setCommand(command);
             channel.setInputStream(null);
             ((ChannelExec) channel).setErrStream(System.err);
             InputStream in = channel.getInputStream();
             channel.connect();
 
             byte[] tmp = new byte[1024];
+
+            logger.info("[read] Antes de llegar al !getClosed() ...");
 
             while (!getClosed()) {
 
@@ -60,15 +62,22 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
                     result = new String(tmp, 0, i);
 
+                    logger.info("[read] Enviando result {}", result);
+
                     this.getReaderController().sendContentReads(result);
 
                 }
-                if (channel.isClosed() || getConfigManager().getUserCriteriaDTO().getResultType().isCloseable()) {
+
+                logger.info("[read] antes de preguntar channel.isClosed()");
+
+                if (channel.isClosed()) {
 
                     break;
                 }
 
                 session.sendKeepAliveMsg();
+
+                logger.info("[read] Envio sendKeepAliveMsg");
 
                 Thread.sleep(1000);
             }
@@ -81,6 +90,8 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
         } finally {
 
             close();
+
+            logger.info("[read] cerro la conexion");
         }
     }
 
