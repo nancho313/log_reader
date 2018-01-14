@@ -4,6 +4,8 @@ import ing_log_reader.commons.dto.UserCriteriaDTO;
 import ing_log_reader.commons.enums.ResultTypeEnum;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.interfaces.ILogCriteria;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +16,15 @@ public enum CriteriaBuilder {
 
     public String buildCriteria(UserCriteriaDTO userCriteriaDTO, String fileName) throws BusinessLogReaderException{
 
+        CriteriaBuilderConstants.logger.info("[buildCriteria] Inicio buildCriteria, userCriteriaDTO -> {}, fileName -> {}", userCriteriaDTO, fileName);
+
         String command = null;
 
         validateUserCriteria(userCriteriaDTO);
 
         command = String.format(buildCriteriaByResultType(userCriteriaDTO), fileName);
+
+        CriteriaBuilderConstants.logger.info("[buildCriteria] Fin buildCriteria, command -> {}", command);
 
         return command;
     }
@@ -97,6 +103,8 @@ public enum CriteriaBuilder {
 
     private void validateUserCriteria(UserCriteriaDTO userCriteriaDTO) throws BusinessLogReaderException{
 
+        CriteriaBuilderConstants.logger.info("[validateUserCriteria] Inicio validaciones");
+
         if(userCriteriaDTO == null){
 
             throw new BusinessLogReaderException("Los criterios ingresados son nulos.");
@@ -118,6 +126,8 @@ public enum CriteriaBuilder {
 
             throw new BusinessLogReaderException("Error validando los criterios: "+ errorMessages);
         }
+
+        CriteriaBuilderConstants.logger.info("[validateUserCriteria] Fin validaciones");
     }
 
     private static class CriteriaBuilderConstants{
@@ -127,5 +137,7 @@ public enum CriteriaBuilder {
         public static final String TAIL = "tail -f %s";
 
         public static final String TAIL_GREP = "tail -f %s | grep";
+
+        public static final Logger logger = LoggerFactory.getLogger(CriteriaBuilder.class);
     }
 }

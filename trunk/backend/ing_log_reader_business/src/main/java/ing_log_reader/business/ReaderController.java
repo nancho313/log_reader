@@ -7,8 +7,12 @@ import ing_log_reader.commons.dto.IConfigManagerDTO;
 
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReaderController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReaderController.class);
 
     private IReaderPrincipal iReaderPrincipal;
 
@@ -27,6 +31,8 @@ public class ReaderController {
     }
 
     public void startRead(IConfigManagerDTO configManager){
+
+        logger.info("[startRead] IConfigManagerDTO : {}", configManager);
 
         this.idSession = configManager.getUserCriteriaDTO().getIdSession();
 

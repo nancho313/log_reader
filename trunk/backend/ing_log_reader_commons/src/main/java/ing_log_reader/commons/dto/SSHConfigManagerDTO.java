@@ -56,4 +56,16 @@ public class SSHConfigManagerDTO extends IConfigManagerDTO {
     public void setDirLog(String dirLog) {
         this.dirLog = dirLog;
     }
+
+    @Override
+    public String toString() {
+        return "SSHConfigManagerDTO{" +
+                "user='" + user + '\'' +
+                ", password='" + password + '\'' +
+                ", ip='" + ip + '\'' +
+                ", port='" + port + '\'' +
+                ", dirLog='" + dirLog + '\'' +
+                ", userCriteriaDTO='" + getUserCriteriaDTO() + '\'' +
+                '}';
+    }
 }
