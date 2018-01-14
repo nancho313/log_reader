@@ -9,6 +9,8 @@ import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 import ing_log_reader.commons.enums.CriteriaEnum;
 import ing_log_reader.commons.enums.ResultTypeEnum;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -25,43 +27,58 @@ public class LogSenderServlet implements IReaderPrincipal {
 
     private Gson gson = new Gson();
 
+    private static final Logger logger = LoggerFactory.getLogger(LogSenderServlet.class);
+
     @OnOpen
     public void onOpen(Session session) {
 
         this.getCurrentUsers().put(session.getId(), new LogConsumerHandler(this, session));
 
         //Prueba
-        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
+        //LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
 
-        UserCriteriaDTO userCriteria = new UserCriteriaDTO();
+        //UserCriteriaDTO userCriteria = new UserCriteriaDTO();
 
-        userCriteria.setIdSession(session.getId());
+        //userCriteria.setIdSession(session.getId());
 
-        userCriteria.setResultType(ResultTypeEnum.TRACE_SEARCH);
+        //userCriteria.setResultType(ResultTypeEnum.TRACE_SEARCH);
 
-        userCriteria.getMatches().add("error");
+        //userCriteria.getMatches().add("error");
 
-        userCriteria.getCriterias().add(CriteriaEnum.IGNORE_CASE);
+        //userCriteria.getCriterias().add(CriteriaEnum.IGNORE_CASE);
 
-        SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(userCriteria);
+        //SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(userCriteria);
 
-        configManagerDTO.setDirLog("/usr/local/jboss-portal-2.7.1/server/default/log/server.log");
+        //configManagerDTO.setDirLog("/usr/local/jboss-portal-2.7.1/server/default/log/server.log");
 
-        configManagerDTO.setIp("10.69.60.96");
+        //configManagerDTO.setIp("10.69.60.96");
 
-        configManagerDTO.setPassword("consulta_log");
+        //configManagerDTO.setPassword("consulta_log");
 
-        configManagerDTO.setUser("consulta_log");
+        //configManagerDTO.setUser("consulta_log");
 
-        consumer.getReaderController().startRead(configManagerDTO);
+        //consumer.getReaderController().startRead(configManagerDTO);
     }
 
     @OnMessage
     public void onMessage(String message, Session session){
 
-        System.out.println("Luego se implementa");
+        logger.info("[onMessage] message -> {}", message);
 
-        //session.getBasicRemote().sendText("Parse le estoy respondiendo en el onOpen");
+        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
+
+        if(consumer.getReaderController() != null){
+
+            consumer.getReaderController().closeRead();
+        }
+
+        SSHConfigManagerDTO configManagerDTO = this.getGson().fromJson(message, SSHConfigManagerDTO.class);
+
+        logger.info("[onMessage] configManagerDTO -> {}", configManagerDTO);
+
+        configManagerDTO.getUserCriteriaDTO().setIdSession(session.getId());
+
+        consumer.getReaderController().startRead(configManagerDTO);
     }
 
     @Override

@@ -43,7 +43,10 @@ public class ReaderController {
 
     public void closeRead(){
 
-        this.readerManager.closeManager();
+        if(this.readerManager != null){
+
+            this.readerManager.closeManager();
+        }
     }
 
     public void sendContentReads(String contentLog){
