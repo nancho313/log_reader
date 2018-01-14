@@ -4,7 +4,11 @@ public class SSHConfigManagerDTO extends IConfigManagerDTO {
 
     public SSHConfigManagerDTO(UserCriteriaDTO userCriteriaDTO){
 
-        super(userCriteriaDTO);
+        setUserCriteriaDTO(userCriteriaDTO);
+    }
+
+    public SSHConfigManagerDTO(){
+
     }
 
     private String user;

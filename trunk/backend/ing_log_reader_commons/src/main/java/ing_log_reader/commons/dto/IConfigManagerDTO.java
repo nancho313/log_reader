@@ -1,13 +1,10 @@
 package ing_log_reader.commons.dto;
 
-public abstract class IConfigManagerDTO {
+import java.io.Serializable;
+
+public abstract class IConfigManagerDTO implements Serializable{
 
     private UserCriteriaDTO userCriteriaDTO;
-
-    public IConfigManagerDTO(UserCriteriaDTO userCriteriaDTO){
-
-        this.userCriteriaDTO = userCriteriaDTO;
-    }
 
     public UserCriteriaDTO getUserCriteriaDTO() {
         return userCriteriaDTO;

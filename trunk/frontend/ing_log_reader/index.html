@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <title>ING_LOG_READER</title>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8; Cache-Control: no-cache" />
+        <link type="text/css" rel="stylesheet" href="css/style.css" />                           
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/ing_log_reader.js"></script>		
+    </head>
+    <body>
+		<div id="content_general">			
+			<div id="content_log_reader">
+				<div id="log_reader"></div>
+			</div>
+			<div id="content_connect_to_file">
+				<div class="log_form">
+					<div class="log_label">IP</div>
+					<input type="text" id="log_ip">
+				</div>
+				<div class="log_form">
+					<div class="log_label">User</div>
+					<input type="text" id="log_user">
+				</div>
+				<div class="log_form">
+					<div class="log_label">Password</div>
+					<input type="password" id="log_password">
+				</div>
+				<div class="log_form">
+					<div class="log_label">Port</div>
+					<input type="text" id="log_port">
+				</div>
+				<div class="log_form">
+					<div class="log_label">Dir File</div>
+					<input type="text" id="log_dir_file">
+				</div>
+			</div>
+			<div id="content_log_options">
+				<div class="log_form">
+					<div class="log_toggle_button" id="button_trace" log_val="TRACE">TRACE</div>
+				</div>
+				<div class="log_form">
+					<div class="log_toggle_button" id="button_search" log_val="SEARCH">SEARCH</div>
+				</div>
+				<div class="log_form">
+					<div class="log_toggle_button" id="button_trace_search" log_val="TRACE_SEARCH">TRACE AND SEARCH</div>
+				</div>
+				<div class="log_label">Options</div>
+				<div class="log_form">
+					<div class="log_label">Text to search</div>
+					<input type="text" id="log_text_to_search">
+				</div>
+				<div class="log_form">
+					<div class="log_label">Invert result</div>
+					<input type="checkbox" id="log_invert">
+				</div>
+				<div class="log_form">
+					<div class="log_button" id="button_criteria">Send criteria</div>
+				</div>
+			</div>
+		</div>
+    </body> 
+</html>
