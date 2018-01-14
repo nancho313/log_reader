@@ -70,10 +70,3 @@ function load_response(evt){
 	
 	console.log(evt.data);  
 }
-
-
-
-
-
-
-
