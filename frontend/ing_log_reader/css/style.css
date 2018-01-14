@@ -1,0 +1,54 @@
+#content_general{
+	
+}
+
+#content_connect_to_file{
+	
+	margin-bottom: 5px;
+}
+
+.log_form{
+	
+	display: inline-block;
+}
+
+.log_label{
+	
+	
+}
+
+.log_toggle_button{
+	
+	padding: 10px;
+    text-align: center;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.selected_log_toggle_button{
+	
+	background: blue;
+}
+
+.log_button{
+	
+    padding: 10px;
+    text-align: center;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+#content_log_reader{
+	
+    height: 500px;
+    margin: 5px;
+    border: 1px solid;
+}
+
+#log_reader{
+	
+}
+
+#content_log_options{
+	
+}
