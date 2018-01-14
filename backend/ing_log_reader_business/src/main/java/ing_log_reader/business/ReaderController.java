@@ -43,6 +43,8 @@ public class ReaderController {
 
     public void closeRead(){
 
+        logger.info("[closeRead] cerrando readerManager...");
+
         if(this.readerManager != null){
 
             this.readerManager.closeManager();
