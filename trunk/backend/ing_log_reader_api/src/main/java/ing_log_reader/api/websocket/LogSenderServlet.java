@@ -12,9 +12,7 @@ import ing_log_reader.commons.interfaces.IReaderPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
@@ -93,6 +91,16 @@ public class LogSenderServlet implements IReaderPrincipal {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @OnClose
+    public void onClose(Session session, CloseReason closeReason){
+
+        logger.info("[onClose] session.getId() -> {}, closeReason -> {}", session.getId(), closeReason);
+
+        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
+
+        consumer.getReaderController().closeRead();
     }
 
     public Map<String, LogConsumerHandler> getCurrentUsers() {

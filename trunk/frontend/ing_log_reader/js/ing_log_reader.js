@@ -3,6 +3,8 @@ $(document).ready(function(){
 	$("#button_criteria").click(send_criteria);
 	
 	$(".log_toggle_button").click(changeToggleButtons);
+
+	init_web_socket();
 });
 
 function init_web_socket(){
@@ -17,7 +19,7 @@ function init_web_socket(){
 	   log_reader_web_socket.onmessage = load_response;	   
 			
 	   window.onbeforeunload = function(event) {
-		  socket.close();
+		  log_reader_web_socket.close();
 	   };
 	}
 }
