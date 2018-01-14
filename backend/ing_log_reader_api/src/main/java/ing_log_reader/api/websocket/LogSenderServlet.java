@@ -6,6 +6,7 @@ import ing_log_reader.commons.dto.UserCriteriaDTO;
 import ing_log_reader.commons.dto.ReadDTO;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 
+import ing_log_reader.commons.enums.CriteriaEnum;
 import ing_log_reader.commons.enums.ResultTypeEnum;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
 
@@ -36,7 +37,11 @@ public class LogSenderServlet implements IReaderPrincipal {
 
         userCriteria.setIdSession(session.getId());
 
-        userCriteria.setResultType(ResultTypeEnum.TRACE);
+        userCriteria.setResultType(ResultTypeEnum.TRACE_SEARCH);
+
+        userCriteria.getMatches().add("error");
+
+        userCriteria.getCriterias().add(CriteriaEnum.IGNORE_CASE);
 
         SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(userCriteria);
 

@@ -9,6 +9,8 @@ import ing_log_reader.business.builder.CriteriaBuilder;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.exception.LogReaderException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
@@ -20,6 +22,8 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
     private Channel channel;
 
+    private static final Logger logger = LoggerFactory.getLogger(SSHReaderManager.class);
+
     public SSHReaderManager(SSHConfigManagerDTO sshConfigManagerDTO, ReaderController readerController){
 
         super(sshConfigManagerDTO, readerController);
@@ -27,9 +31,13 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
     public void read() throws LogReaderException {
 
+        logger.info("[read] Inicio read ...");
+
         String result;
 
         String commandTail = CriteriaBuilder.INSTANCE.buildCriteria(getConfigManager().getUserCriteriaDTO(), getConfigManager().getDirLog());
+
+        logger.info("[read] commandTail -> {} ", commandTail);
 
         try {
 
@@ -66,7 +74,10 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
             }
         } catch (Exception e) {
 
+            logger.error("[read] Error al realizar la lectura ", e);
+
             throw new BusinessLogReaderException("Hubo un error a la hora de leer el log", e);
+
         } finally {
 
             close();
@@ -76,6 +87,8 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
     public void initManager() throws LogReaderException {
 
         try {
+
+            logger.info("[initManager] Inicializando comunicacion SSH ...");
 
             jSch = new JSch();
             jSch.setConfig("StrictHostKeyChecking", "no");
@@ -88,7 +101,11 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
             session.setPassword(password);
             session.connect();
 
+            logger.info("[initManager] Finalizo comunicacion SSH ...");
+
         } catch (Exception e){
+
+            logger.error("[initManager] Error al inicializar la comunicacion", e);
 
             throw new BusinessLogReaderException("No se pudo iniciar la conexion.", e);
         }
