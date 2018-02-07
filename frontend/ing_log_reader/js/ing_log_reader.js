@@ -66,9 +66,11 @@ function send_criteria(){
 
 function load_response(evt){
 	
-	var received_msg = evt.data;
+	var received_msg = JSON.parse(evt.data);
+
+	var parsedContentRead = "<div>"+received_msg.contentRead.replace("\n", "</div><div>")+"</div>";
 	
-	$("#log_reader").append(received_msg);
+	$("#log_reader").append(parsedContentRead);
 	
 	console.log(evt.data);  
 }

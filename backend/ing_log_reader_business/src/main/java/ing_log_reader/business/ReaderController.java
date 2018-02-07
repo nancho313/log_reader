@@ -53,12 +53,16 @@ public class ReaderController {
 
     public void sendContentReads(String contentLog){
 
+        //contentLog = applyFilters(contentLog);
+
         this.getiReaderPrincipal().sendContentReads(ReaderBuilder.INSTANCE.getReadDTO(contentLog), this.idSession);
     }
 
-    private void applyFilters(String contentLog){
+    private String applyFilters(String contentLog){
 
+        contentLog = contentLog.replace("\n", "<br>");
 
+        return contentLog;
     }
 
     private IReaderPrincipal getiReaderPrincipal() {
