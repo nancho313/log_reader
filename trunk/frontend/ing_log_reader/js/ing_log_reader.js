@@ -4,6 +4,8 @@ $(document).ready(function(){
 	
 	$(".log_toggle_button").click(changeToggleButtons);
 
+	$("#clean_log").click(cleanLogReader);
+
 	init_web_socket();
 });
 
@@ -52,8 +54,15 @@ function send_criteria(){
 	var userCriteriaDTO = {};
 	
 	userCriteriaDTO.resultType = $(".selected_log_toggle_button").attr("log_val");
-	
-	userCriteriaDTO.matches = [$("#log_text_to_search").val()];
+
+	var textToSearch = $("#log_text_to_search").val();
+
+	userCriteriaDTO.matches = [];
+
+	if(textToSearch !== null && textToSearch.trim().length > 0){
+
+	    userCriteriaDTO.matches = [$("#log_text_to_search").val()];
+	}
 	
 	//userCriteriaDTO.criterias = [];
 	
@@ -68,9 +77,14 @@ function load_response(evt){
 	
 	var received_msg = JSON.parse(evt.data);
 
-	var parsedContentRead = "<div>"+received_msg.contentRead.replace("\n", "</div><div>")+"</div>";
+	var parsedContentRead = received_msg.contentRead;
 	
 	$("#log_reader").append(parsedContentRead);
 	
 	console.log(evt.data);  
+}
+
+function cleanLogReader(){
+
+    $("#log_reader").html("");
 }

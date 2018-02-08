@@ -18,6 +18,8 @@ public class ReaderController {
 
     private IReaderManager readerManager;
 
+    private IConfigManagerDTO configManager;
+
     private String idSession;
 
     public ReaderController(IReaderPrincipal iReaderPrincipal) throws BusinessLogReaderException{
@@ -33,6 +35,8 @@ public class ReaderController {
     public void startRead(IConfigManagerDTO configManager){
 
         logger.info("[startRead] IConfigManagerDTO : {}", configManager);
+
+        this.configManager = configManager;
 
         this.idSession = configManager.getUserCriteriaDTO().getIdSession();
 
@@ -53,14 +57,22 @@ public class ReaderController {
 
     public void sendContentReads(String contentLog){
 
-        //contentLog = applyFilters(contentLog);
+        contentLog = applyFilters(contentLog);
 
         this.getiReaderPrincipal().sendContentReads(ReaderBuilder.INSTANCE.getReadDTO(contentLog), this.idSession);
     }
 
     private String applyFilters(String contentLog){
 
-        contentLog = contentLog.replace("\n", "<br>");
+        contentLog = contentLog.replace("\n", "<br>").replace("\\n", "<br>");
+
+        if(configManager.getUserCriteriaDTO().getMatches().size() > 0){
+
+            for(String match: configManager.getUserCriteriaDTO().getMatches()){
+
+                contentLog = contentLog.replace(match, "<div class='log_match'>"+match+"</div>");
+            }
+        }
 
         return contentLog;
     }
