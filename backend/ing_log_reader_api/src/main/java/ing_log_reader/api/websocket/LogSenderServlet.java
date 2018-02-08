@@ -31,31 +31,6 @@ public class LogSenderServlet implements IReaderPrincipal {
     public void onOpen(Session session) {
 
         this.getCurrentUsers().put(session.getId(), new LogConsumerHandler(this, session));
-
-        //Prueba
-        //LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
-
-        //UserCriteriaDTO userCriteria = new UserCriteriaDTO();
-
-        //userCriteria.setIdSession(session.getId());
-
-        //userCriteria.setResultType(ResultTypeEnum.TRACE_SEARCH);
-
-        //userCriteria.getMatches().add("error");
-
-        //userCriteria.getCriterias().add(CriteriaEnum.IGNORE_CASE);
-
-        //SSHConfigManagerDTO configManagerDTO = new SSHConfigManagerDTO(userCriteria);
-
-        //configManagerDTO.setDirLog("/usr/local/jboss-portal-2.7.1/server/default/log/server.log");
-
-        //configManagerDTO.setIp("10.69.60.96");
-
-        //configManagerDTO.setPassword("consulta_log");
-
-        //configManagerDTO.setUser("consulta_log");
-
-        //consumer.getReaderController().startRead(configManagerDTO);
     }
 
     @OnMessage

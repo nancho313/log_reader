@@ -49,8 +49,17 @@
 
 	height: 100%;
     overflow: scroll;
+    overflow-x: hidden;
+    padding: 5px;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 #content_log_options{
 	
+}
+
+.log_match{
+
+    color: red;
+    display: inline-block;
 }
