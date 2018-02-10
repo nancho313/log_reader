@@ -1,6 +1,6 @@
 package ing_log_reader.api.handler;
 
-import ing_log_reader.business.ReaderController;
+import ing_log_reader.business.controller.ReaderController;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
 
