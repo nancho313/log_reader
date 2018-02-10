@@ -2,9 +2,8 @@ package ing_log_reader.api.websocket;
 
 import com.google.gson.Gson;
 import ing_log_reader.api.handler.LogConsumerHandler;
-import ing_log_reader.commons.dto.UserCriteriaDTO;
-import ing_log_reader.commons.dto.ReadDTO;
-import ing_log_reader.commons.dto.SSHConfigManagerDTO;
+import ing_log_reader.api.message.MessageResolver;
+import ing_log_reader.commons.dto.*;
 
 import ing_log_reader.commons.enums.CriteriaEnum;
 import ing_log_reader.commons.enums.ResultTypeEnum;
@@ -38,20 +37,17 @@ public class LogSenderServlet implements IReaderPrincipal {
 
         logger.info("[onMessage] message -> {}", message);
 
-        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
+        MessageDTO messageDTO = MessageResolver.INSTANCE.resolveMessage(message);
 
-        if(consumer.getReaderController() != null){
+        if(messageDTO instanceof CloseLogDTO){
 
-            consumer.getReaderController().closeRead();
+            closeLog(session);
         }
+        else
+            if(messageDTO instanceof SSHConfigManagerDTO){
 
-        SSHConfigManagerDTO configManagerDTO = this.getGson().fromJson(message, SSHConfigManagerDTO.class);
-
-        logger.info("[onMessage] configManagerDTO -> {}", configManagerDTO);
-
-        configManagerDTO.getUserCriteriaDTO().setIdSession(session.getId());
-
-        consumer.getReaderController().startRead(configManagerDTO);
+                sendRequestLog((SSHConfigManagerDTO)messageDTO, session);
+            }
     }
 
     @Override
@@ -73,9 +69,7 @@ public class LogSenderServlet implements IReaderPrincipal {
 
         logger.info("[onClose] session.getId() -> {}, closeReason -> {}", session.getId(), closeReason);
 
-        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
-
-        consumer.getReaderController().closeRead();
+        closeLog(session);
     }
 
     public Map<String, LogConsumerHandler> getCurrentUsers() {
@@ -89,5 +83,30 @@ public class LogSenderServlet implements IReaderPrincipal {
 
     public Gson getGson() {
         return gson;
+    }
+
+    private void sendRequestLog(SSHConfigManagerDTO configManagerDTO, Session session){
+
+        logger.info("[sendRequestLog] configManagerDTO -> {}", configManagerDTO);
+
+        closeLog(session);
+
+        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
+
+        configManagerDTO.getUserCriteriaDTO().setIdSession(session.getId());
+
+        consumer.getReaderController().startRead(configManagerDTO);
+    }
+
+    private void closeLog(Session session){
+
+        logger.info("[closeLog] Cerrando conexion del log.");
+
+        LogConsumerHandler consumer = this.getCurrentUsers().get(session.getId());
+
+        if(consumer.getReaderController() != null){
+
+            consumer.getReaderController().closeRead();
+        }
     }
 }

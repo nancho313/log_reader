@@ -1,6 +1,8 @@
 package ing_log_reader.commons.dto;
 
-public class SSHConfigManagerDTO extends IConfigManagerDTO {
+import java.io.Serializable;
+
+public class SSHConfigManagerDTO extends MessageDTO implements Serializable{
 
     public SSHConfigManagerDTO(UserCriteriaDTO userCriteriaDTO){
 
@@ -20,6 +22,16 @@ public class SSHConfigManagerDTO extends IConfigManagerDTO {
     private String port;
 
     private String dirLog;
+
+    private UserCriteriaDTO userCriteriaDTO;
+
+    public UserCriteriaDTO getUserCriteriaDTO() {
+        return userCriteriaDTO;
+    }
+
+    public void setUserCriteriaDTO(UserCriteriaDTO userCriteriaDTO) {
+        this.userCriteriaDTO = userCriteriaDTO;
+    }
 
     public String getUser() {
         return user;

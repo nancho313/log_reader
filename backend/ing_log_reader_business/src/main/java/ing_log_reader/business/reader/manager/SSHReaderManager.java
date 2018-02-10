@@ -22,6 +22,8 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
     private Channel channel;
 
+    private static int LENGTH_READ = 2048;
+
     private static final Logger logger = LoggerFactory.getLogger(SSHReaderManager.class);
 
     public SSHReaderManager(SSHConfigManagerDTO sshConfigManagerDTO, ReaderController readerController){
@@ -48,7 +50,7 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
             InputStream in = channel.getInputStream();
             channel.connect();
 
-            byte[] tmp = new byte[1024];
+            byte[] tmp = new byte[LENGTH_READ];
 
             logger.info("[read] Antes de llegar al !getClosed() ...");
 
@@ -56,19 +58,20 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
                 while (in.available() > 0) {
 
-                    int i = in.read(tmp, 0, 1024);
+                    int i = in.read(tmp, 0, LENGTH_READ);
 
                     if (i < 0) break;
 
                     result = new String(tmp, 0, i);
 
-                    logger.info("[read] Enviando result {}", result);
-
                     this.getReaderController().sendContentReads(result);
 
-                }
+                    if(getClosed()){
 
-                logger.info("[read] antes de preguntar channel.isClosed()");
+                        break;
+                    }
+
+                }
 
                 if (channel.isClosed()) {
 
@@ -79,7 +82,7 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
                 logger.info("[read] Envio sendKeepAliveMsg");
 
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }
         } catch (Exception e) {
 
