@@ -1,5 +1,6 @@
 package ing_log_reader.business.builder;
 
+import ing_log_reader.commons.dto.CriteriaDTO;
 import ing_log_reader.commons.dto.UserCriteriaDTO;
 import ing_log_reader.commons.enums.ResultTypeEnum;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
@@ -86,7 +87,7 @@ public enum CriteriaBuilder {
 
         StringBuffer stringBuffer = new StringBuffer();
 
-        for(ILogCriteria criteria: userCriteriaDTO.getCriterias()){
+        for(CriteriaDTO criteria: userCriteriaDTO.getCriterias()){
 
             stringBuffer.append(criteria.resolveCriteria());
         }

@@ -1,4 +1,4 @@
-package ing_log_reader.business;
+package ing_log_reader.business.controller;
 
 import ing_log_reader.business.builder.ReaderBuilder;
 import ing_log_reader.business.reader.manager.IReaderManager;

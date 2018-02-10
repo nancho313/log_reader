@@ -4,7 +4,7 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import ing_log_reader.business.ReaderController;
+import ing_log_reader.business.controller.ReaderController;
 import ing_log_reader.business.builder.CriteriaBuilder;
 import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
@@ -23,6 +23,8 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
     private Channel channel;
 
     private static int LENGTH_READ = 2048;
+
+    private static int SLEEP_TIME = 250;
 
     private static final Logger logger = LoggerFactory.getLogger(SSHReaderManager.class);
 
@@ -80,9 +82,7 @@ public class SSHReaderManager extends IReaderManager<SSHConfigManagerDTO> {
 
                 session.sendKeepAliveMsg();
 
-                logger.info("[read] Envio sendKeepAliveMsg");
-
-                Thread.sleep(500);
+                Thread.sleep(SLEEP_TIME);
             }
         } catch (Exception e) {
 

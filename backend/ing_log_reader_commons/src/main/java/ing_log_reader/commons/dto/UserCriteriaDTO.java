@@ -1,5 +1,6 @@
 package ing_log_reader.commons.dto;
 
+import ing_log_reader.commons.enums.CriteriaEnum;
 import ing_log_reader.commons.enums.ResultTypeEnum;
 import ing_log_reader.commons.interfaces.ILogCriteria;
 
@@ -15,7 +16,7 @@ public class UserCriteriaDTO implements Serializable {
 
     private List<String> matches;
 
-    private List<ILogCriteria> criterias;
+    private List<CriteriaDTO> criterias;
 
     public ResultTypeEnum getResultType() {
         return resultType;
@@ -38,16 +39,16 @@ public class UserCriteriaDTO implements Serializable {
         this.matches = matches;
     }
 
-    public List<ILogCriteria> getCriterias() {
+    public List<CriteriaDTO> getCriterias() {
 
         if(criterias == null){
-            criterias = new ArrayList<ILogCriteria>();
+            criterias = new ArrayList<CriteriaDTO>();
         }
 
         return criterias;
     }
 
-    public void setCriterias(List<ILogCriteria> criterias) {
+    public void setCriterias(List<CriteriaDTO> criterias) {
         this.criterias = criterias;
     }
 

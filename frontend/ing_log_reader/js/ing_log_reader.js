@@ -1,4 +1,4 @@
-var scrollLog = false;
+var scrollLog = true;
 
 $(document).ready(function(){
 	
@@ -71,12 +71,90 @@ function send_criteria(){
 
 	    userCriteriaDTO.matches = [$("#log_text_to_search").val()];
 	}
+
+	userCriteriaDTO.criterias = [];
 	
-	//userCriteriaDTO.criterias = [];
+	if($("#log_invert").is(":checked")){
+
+	    var criteria = {};
+
+	    criteria.criteria = "INVERT";
+
+	    userCriteriaDTO.criterias.push(criteria);
+	}
+
+	if($("#log_ignore_case").is(":checked")){
+
+	    var criteria = {};
+
+    	criteria.criteria = "IGNORE_CASE";
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
+
+    if($("#log_count_matches").is(":checked")){
+
+        var criteria = {};
+
+        criteria.criteria = "COUNT_MATCHES";
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
+
+    if($("#log_line_number").is(":checked")){
+
+        var criteria = {};
+
+        criteria.criteria = "LINE_NUMBER";
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
+
+    if($("#log_max_count").val().trim().length > 0){
+
+        var criteria = {};
+
+        criteria.criteria = "MAX_COUNT";
+
+        criteria.value = $("#log_max_count").val().trim();
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
+
+    if($("#log_before").val().trim().length > 0){
+
+        var criteria = {};
+
+        criteria.criteria = "BEFORE_CONTEXT";
+
+        criteria.value = $("#log_before").val().trim();
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
+
+    if($("#log_after").val().trim().length > 0){
+
+        var criteria = {};
+
+        criteria.criteria = "AFTER_CONTEXT";
+
+        criteria.value = $("#log_after").val().trim();
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
+
+    if($("#log_context").val().trim().length > 0){
+
+        var criteria = {};
+
+        criteria.criteria = "CONTEXT";
+
+        criteria.value = $("#log_context").val().trim();
+
+        userCriteriaDTO.criterias.push(criteria);
+    }
 	
 	sshConfigManagerDTO.userCriteriaDTO = userCriteriaDTO;
-	
-	console.log(JSON.stringify(sshConfigManagerDTO));
 	
 	log_reader_web_socket.send(JSON.stringify(sshConfigManagerDTO));
 }
@@ -100,12 +178,6 @@ function scrollLogPanel(){
     var scrollPosition = $('#log_reader').scrollTop();
 
     var scrollHeight = $('#log_reader')[0].scrollHeight;
-
-    console.log("scrollPosition -> "+scrollPosition);
-
-    console.log("scrollHeight -> "+scrollHeight);
-
-    scrollLog = scrollPosition === scrollHeight;
 }
 
 function cleanLogReader(){
