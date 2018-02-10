@@ -1,10 +1,11 @@
 package ing_log_reader.business.reader.manager;
 
 import ing_log_reader.business.ReaderController;
-import ing_log_reader.commons.dto.IConfigManagerDTO;
 import ing_log_reader.commons.exception.LogReaderException;
 
-public abstract class IReaderManager<T extends IConfigManagerDTO> implements Runnable{
+import java.io.Serializable;
+
+public abstract class IReaderManager<T extends Serializable> extends Thread{
 
     private T configManager;
 

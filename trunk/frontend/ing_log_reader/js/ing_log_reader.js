@@ -1,3 +1,5 @@
+var scrollLog = false;
+
 $(document).ready(function(){
 	
 	$("#button_criteria").click(send_criteria);
@@ -6,6 +8,10 @@ $(document).ready(function(){
 
 	$("#clean_log").click(cleanLogReader);
 
+	$("#close_log").click(closeLogReader);
+
+	$('#log_reader').scroll(scrollLogPanel);
+
 	init_web_socket();
 });
 
@@ -13,7 +19,7 @@ function init_web_socket(){
 	
 	if ("WebSocket" in window)
 	{  
-	   // Let us open a web socket
+
 	   log_reader_web_socket = new WebSocket("ws://localhost:8080/ing_log_reader_api/LogSender");
 		
 	   log_reader_web_socket.onopen = onOpenWS;	   
@@ -40,6 +46,8 @@ function changeToggleButtons(){
 function send_criteria(){
 	
 	var sshConfigManagerDTO = {};
+
+	sshConfigManagerDTO.messageType = "REQUEST_LOG";
 	
 	sshConfigManagerDTO.ip = $("#log_ip").val();
 	
@@ -80,11 +88,38 @@ function load_response(evt){
 	var parsedContentRead = received_msg.contentRead;
 	
 	$("#log_reader").append(parsedContentRead);
-	
-	console.log(evt.data);  
+
+	if(scrollLog){
+
+	    $('#log_reader').scrollTop($('#log_reader')[0].scrollHeight);
+	}
+}
+
+function scrollLogPanel(){
+
+    var scrollPosition = $('#log_reader').scrollTop();
+
+    var scrollHeight = $('#log_reader')[0].scrollHeight;
+
+    console.log("scrollPosition -> "+scrollPosition);
+
+    console.log("scrollHeight -> "+scrollHeight);
+
+    scrollLog = scrollPosition === scrollHeight;
 }
 
 function cleanLogReader(){
 
     $("#log_reader").html("");
+}
+
+function closeLogReader(){
+
+    var closeLog = {};
+
+    closeLog.messageType = "CLOSE_LOG";
+
+    log_reader_web_socket.send(JSON.stringify(closeLog));
+
+    cleanLogReader();
 }

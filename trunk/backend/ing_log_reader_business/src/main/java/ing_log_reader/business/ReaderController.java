@@ -2,9 +2,9 @@ package ing_log_reader.business;
 
 import ing_log_reader.business.builder.ReaderBuilder;
 import ing_log_reader.business.reader.manager.IReaderManager;
-import ing_log_reader.business.reader.manager.ReaderManagerFactory;
-import ing_log_reader.commons.dto.IConfigManagerDTO;
 
+import ing_log_reader.business.reader.manager.SSHReaderManager;
+import ing_log_reader.commons.dto.SSHConfigManagerDTO;
 import ing_log_reader.commons.exception.BusinessLogReaderException;
 import ing_log_reader.commons.interfaces.IReaderPrincipal;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class ReaderController {
 
     private IReaderManager readerManager;
 
-    private IConfigManagerDTO configManager;
+    private SSHConfigManagerDTO configManager;
 
     private String idSession;
 
@@ -32,7 +32,7 @@ public class ReaderController {
         this.iReaderPrincipal = iReaderPrincipal;
     }
 
-    public void startRead(IConfigManagerDTO configManager){
+    public void startRead(SSHConfigManagerDTO configManager){
 
         logger.info("[startRead] IConfigManagerDTO : {}", configManager);
 
@@ -40,16 +40,18 @@ public class ReaderController {
 
         this.idSession = configManager.getUserCriteriaDTO().getIdSession();
 
-        this.readerManager = ReaderManagerFactory.INSTANCE.getReaderManager(this, configManager);
+        this.readerManager = new SSHReaderManager(configManager, this);
 
-        this.readerManager.run();
+        this.readerManager.start();
+
+        logger.info("[startRead] Se inicio el readerManager correctamente");
     }
 
     public void closeRead(){
 
-        logger.info("[closeRead] cerrando readerManager...");
-
         if(this.readerManager != null){
+
+            logger.info("[closeRead] cerrando readerManager...");
 
             this.readerManager.closeManager();
         }
