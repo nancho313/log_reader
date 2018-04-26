@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+//Este es un pequenio cambio para que jenkins pueda volver a construir
+
 @ServerEndpoint("/LogSender")
 public class LogSenderServlet implements IReaderPrincipal {
 
